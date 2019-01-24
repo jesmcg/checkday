@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+      CheckDay
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <h4 text-center class="title">Welcome</h4>
+    <h4 text-center class="title"> {{ _userProvider.name }} {{ _userProvider.lastname }}</h4>
+    <h3 text-center class="time">{{ today | date:'dd MMMM yyyy' }}</h3>
+    <h3 text-center class="time">{{ time | date:'HH:mm:ss'}}</h3>
+    <h3 text-center class="time">{{ auxdate }}</h3>
+  </div>
+  <ng-container [ngSwitch]="_flag">
+    <div *ngSwitchCase ="'S'">
+      <div  *ngIf="_isBefore">
+          <div class="form-container">
+            <span>Justifique la salida temprano.</span>
+            <ion-input type="text" class="txt-field" [(ngModel)]="subject" placeholder="Subject"></ion-input>
+            <ion-textarea  class="txt-area" [(ngModel)]="messsage" placeholder="Description"></ion-textarea>
+          </div>
+          <div class="button-container">
+            <button ion-button
+                    color="primary"
+                    class="btn-login"
+                    (click)="check_day('B')"
+                    block>Salida </button>
+          </div>
+      </div>
+      <div *ngIf="_isBefore == false">
+        <div class="button-container">
+          <button ion-button
+                  color="primary"
+                  class="btn-login"
+                  (click)="check_day('S')"
+                  block>Salida </button>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'E'">
+      <div *ngIf="_isAfter">
+        <div class="form-container" *ngIf="!_isCurrentDay" >
+          <span>Justifique la llegada tarde.</span>
+          <ion-input type="text" class="txt-field" [(ngModel)]="subject" placeholder="Subject"></ion-input>
+          <ion-textarea  class="txt-area" [(ngModel)]="messsage" placeholder="Description"></ion-textarea>
+        </div>
+        <div class="button-container">
+          <button ion-button
+                  color="primary"
+                  class="btn-login"
+                  [disabled]="_isCurrentDay"
+                  (click)="check_day('R')"
+                  block>Entrada</button>
+        </div>
+      </div>
+      <div *ngIf="_isAfter == false">
+        <div *ngIf="_isOut == true">
+          <span>Justifique estrada fuera de las instalaciones.</span>
+          <div class="form-container" *ngIf="!_isCurrentDay">
+            <ion-input type="text" class="txt-field" [(ngModel)]="subject" placeholder="Subject"></ion-input>
+            <ion-textarea  class="txt-area" [(ngModel)]="messsage" placeholder="Description"></ion-textarea>
+          </div>
+          <div class="button-container" *ngIf="_isAfter == false">
+            <button ion-button
+                    color="primary"
+                    class="btn-login"
+                    [disabled]="_isCurrentDay"
+                    (click)="check_day('O')"
+                    block>Entrada</button>
+          </div>
+        </div>
+        <div class="" *ngIf="_isOut == false">
+          <div class="button-container" *ngIf="_isAfter == false">
+            <button ion-button
+                    color="primary"
+                    class="btn-login"
+                    [disabled]="isCurrentDay"
+                    (click)="check_day('E')"
+                    block>Entrada</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchDefault>output2</div>
+  </ng-container>
+</ion-content>

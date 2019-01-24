@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Inicio
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <div class="container">
+    <ion-input type="number" class="txt-field" [(ngModel)]="folio" placeholder="FOLIO"></ion-input>
+    <ion-input type="password" class="txt-field" [(ngModel)]="password" placeholder="PASSWORD"></ion-input>
+
+    <button ion-button
+            color="secondary"
+            class="btn-login"
+            [disabled]="folio < 4 || password < 3"
+            (click)="user_login()"
+            block>Iniciar</button>
+  </div>
+
+
+</ion-content>
